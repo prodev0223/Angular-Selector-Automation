@@ -1,0 +1,6 @@
+.similar-items {
+    outline: 2px dashed purple !important;
+}
+.selected-items {
+    outline: 2px dashed orange !important;
+}

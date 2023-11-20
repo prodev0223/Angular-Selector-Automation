@@ -1,0 +1,8 @@
+input:checked ~ .dot {
+  transform: translateX(100%);
+  background-color: white;
+}
+
+input:checked ~ .bg {
+  @apply bg-primary;
+}

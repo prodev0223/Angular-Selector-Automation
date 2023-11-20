@@ -1,0 +1,32 @@
+<label
+  [for]="id"
+  class="flex items-center cursor-pointer"
+>
+  <!-- toggle -->
+  <div class="relative">
+    <!-- input -->
+    <input
+      type="checkbox"
+      [(ngModel)]="value"
+      [value]="value"
+      [disabled]="disabled"
+      [class]="classes"
+      [id]="id"
+      (change)="onInputChange($event)"
+      class="sr-only"
+    />
+    <!-- line -->
+    <div
+      class="bg block  w-10 h-6 rounded-full bg-gray-500"
+    ></div>
+    <!-- dot -->
+    <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div>
+  </div>
+  <!-- label -->
+  <div
+    *ngIf="label"
+    class="ml-3 text-dark font-medium"
+  >
+    {{ label }}
+  </div>
+</label>

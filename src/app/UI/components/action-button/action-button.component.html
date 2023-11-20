@@ -1,0 +1,17 @@
+<button
+    class="flex flex-col items-center justify-center rounded-md border-0 hover:secondary-bg-color light-bg-color py-4 p-2 shadow-sm"
+    [ngClass]="!disabled ? 'text-primary' : 'text-mild'"
+    (click)="execAction()"
+    [disabled]="disabled"
+>
+    <svg-icon
+        [src]="content.icon"
+        [svgStyle]="{ 'height.px': 24, 'width.px': 24  }"
+    ></svg-icon>
+    <span class="font-medium text-base">
+        {{ content.title }}
+    </span>
+    <span class="text-xs text-mild">
+        {{ content.description }}
+    </span>
+</button>

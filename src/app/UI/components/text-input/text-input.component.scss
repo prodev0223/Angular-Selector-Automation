@@ -1,0 +1,6 @@
+:host {
+    @apply block;
+    .invalid {
+        @apply border-warning;
+    }
+}

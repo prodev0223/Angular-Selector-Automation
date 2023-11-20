@@ -1,0 +1,49 @@
+<div
+    *ngIf="{
+    selectedElements : (selectedElements$ | async) || [],
+    similarElements : similarElements$ | async
+  } as strems"
+    class="flex flex-col gap-4 text-dark"
+>
+    <p class="text-base font-medium m-0">
+        selection mode: {{ ((selectionModeActive$ | async) ? 'active' : 'inactive') | titlecase }}
+    </p>
+    <div class="flex items-center justify-between m-0">
+        <p class="text-base font-medium">
+            Selected elements: {{ strems.selectedElements.length }}
+        </p>
+        <p
+            *ngIf="strems.selectedElements.length"
+            class="text-base font-medium cursor-pointer text-primary m-0"
+            [ngModel]="!!strems.similarElements"
+        >
+        <div class="flex items-center gap-2">
+            <label class="text-sm" for="selectAll">Select all</label>
+            <input
+                id="selectAll"
+                type="checkbox"
+                name="selectAll"
+                (change)="selectAll($event)"
+            >
+        </div>
+    </div>
+    <div class="flex flex-col gap-2">
+        <app-action-button
+            [action]="action.ClickOnSelectedElements"
+            [disabled]="!strems.selectedElements.length"
+        >
+        </app-action-button>
+        <app-action-button
+            [action]="action.FillForms"
+            [disabled]="!strems.selectedElements.length"
+        >
+        </app-action-button>
+        <app-action-button [action]="action.ToggleSelectionMode">
+        </app-action-button>
+        <app-action-button
+            [action]="action.GetTextContent"
+            [disabled]="!strems.selectedElements.length"
+        >
+        </app-action-button>
+    </div>
+</div>

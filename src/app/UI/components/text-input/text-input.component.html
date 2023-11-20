@@ -1,0 +1,26 @@
+<div class="flex flex-col gap-1">
+  <label
+    *ngIf="label"
+    [for]="label"
+    class="font-semibold text-dark"
+  >{{ label }}</label>
+  <div
+    class="flex flew-row items-center focus-within:border-primary border-2  px-4 rounded secondary-border-color"
+    [ngClass]="{invalid: invalid || !isValid}"
+  >
+    <ng-content></ng-content>
+    <input
+      [type]="type"
+      [placeholder]="placeholder"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+      [(ngModel)]="value"
+      [disabled]="disabled"
+      (keyup.enter)="enter.emit()"
+      [min]="min"
+      (input)="onInputChange($event)"
+      class="text-dark ring-transparent border-0 bg-transparent w-full focus:border-0 focus:ring-transparent h-12 px-0"
+      [class]="classes"
+    />
+  </div>
+</div>

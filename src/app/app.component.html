@@ -1,0 +1,20 @@
+<div class="flex flex-col gap-4 surface-bg-color p-6">
+  <mat-stepper
+    #stepper
+    [orientation]="'horizontal'"
+  >
+    <mat-step [editable]="true">
+      <app-main></app-main>
+    </mat-step>
+    <mat-step [editable]="true">
+      <app-save-info (back)="stepper.selectedIndex = 0"></app-save-info>
+    </mat-step>
+  </mat-stepper>
+
+  <app-toggle-input
+    class="ml-auto"
+    [(ngModel)]="darkMode"
+    [label]="'darkMode'"
+    (change)="updateDarkMode($any($event.target).checked)"
+  ></app-toggle-input>
+</div>
