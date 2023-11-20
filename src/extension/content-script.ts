@@ -26,12 +26,14 @@ const initHighlightAreaElement = () => {
 const toggleSelectionMode = () => {
     selectionModeActive = !selectionModeActive
     if (!selectionModeActive) {
-        document.removeEventListener("mouseover", mouseOverListner);
         document.removeEventListener("click", mouseClickListner);
+        document.removeEventListener("mouseover", mouseOverListner);
+        document.removeEventListener("contextmenu", mouseClickListner);
         highlightAreaElement.style.display = 'none'
     } else {
-        document.addEventListener("mouseover", mouseOverListner);
         document.addEventListener("click", mouseClickListner);
+        document.addEventListener("mouseover", mouseOverListner);
+        document.addEventListener("contextmenu", mouseClickListner);
         highlightAreaElement.style.display = 'block'
     }
 }
@@ -43,6 +45,7 @@ const mouseOverListner = (event: MouseEvent) => {
 }
 
 const mouseClickListner = (event: MouseEvent) => {
+    event.stopImmediatePropagation()
     event.preventDefault()
     event.stopPropagation()
     const element = event.target as HTMLElement
@@ -83,6 +86,7 @@ const GetTextContent = () => {
 }
 
 const highlightSimilarItems = (selector: string) => {
+
     try {
         document.querySelectorAll('.similar-items').forEach(e => e.classList.remove(cssClasses.SIMILAR_ITEMS))
         const elements = document.querySelectorAll(selector)
