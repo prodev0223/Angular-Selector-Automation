@@ -2,6 +2,8 @@ import { MessageRequestBody, MessageResponseBody } from "src/app/core/models"
 export enum cssClasses {
     SIMILAR_ITEMS = 'similar-items',
     SELECTED_ITEMS = 'selected-items',
+    INNER_SIMILAR_ITEMS = 'inner-similar-items',
+    INNER_SELECTED_ITEMS = 'inner-selected-items',
 }
 
 export namespace extension {
@@ -37,10 +39,13 @@ export namespace extension {
 export const getElementSelector = (element: HTMLElement) => {
     try {
         if (!element) return '';
-        const id = element.id ? `#${element.id}` : '';
-        const classes = `${Array.from(element.classList).filter(c => ![cssClasses.SELECTED_ITEMS, cssClasses.SIMILAR_ITEMS].includes(c as any)).join('.')}`;
+        const parent = element.parentElement
+        const parenttagName = parent ? parent.tagName.toLowerCase() : '';
+        const parentclasses = parent ? `${Array.from(parent.classList).filter(c => ![cssClasses.SELECTED_ITEMS, cssClasses.SIMILAR_ITEMS].includes(c as any)).join('.')} `  : ' ';
+
         const tagName = element.tagName.toLowerCase();
-        return classes ? `${tagName}${''}.${classes}` : '';
+        const classes = `${Array.from(element.classList).filter(c => ![cssClasses.SELECTED_ITEMS, cssClasses.SIMILAR_ITEMS].includes(c as any)).join('.')} `;
+        return `${parenttagName}.${parentclasses} > ${tagName}.${classes}`.replace(/\.\s/g, ' ').replace(/\s+/g, ' ').trim();
     } catch (err) {
         console.log(err);
         return ''

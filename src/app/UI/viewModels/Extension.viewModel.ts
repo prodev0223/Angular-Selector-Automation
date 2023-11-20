@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Action } from 'src/app/core/models';
-import { SELECTED_ELEMENTS, SELECTION_MODE_ACTIVE, SIMILAR_ELEMENTS } from 'src/app/utilities/TokenKeys';
+import { ACTION_MODE, SELECTED_ELEMENTS, SELECTION_MODE_ACTIVE, SIMILAR_ELEMENTS, TEXT_CONTENT } from 'src/app/utilities/TokenKeys';
 import { ExtensionService } from 'src/app/utilities/services/Extension.service';
 
 @Injectable({
@@ -11,8 +11,10 @@ export class ExtensionViewModel {
   selectionModeActive$ = new BehaviorSubject<boolean>(false)
   selectedElements$ = new BehaviorSubject<string[]>([])
   similarElements$ = new BehaviorSubject<number>(0)
+  actionMode$ = new Subject<Action.GetTextContent | null>()
   textContent$ = new Subject<string>()
-  
+
+
   constructor(
     private extensionService: ExtensionService,
   ) { }
@@ -30,6 +32,8 @@ export class ExtensionViewModel {
     this.extensionService.get(SELECTION_MODE_ACTIVE).then(res => this.selectionModeActive$.next(!!res))
     this.extensionService.get(SELECTED_ELEMENTS).then(res => this.selectedElements$.next((res ?? []) as Array<string>))
     this.extensionService.get(SIMILAR_ELEMENTS).then(res => this.similarElements$.next(+(res as any ?? 0)))
+    this.extensionService.get(ACTION_MODE).then(res => { console.log({ res }); this.actionMode$.next(res ?? null) })
+    this.extensionService.get(TEXT_CONTENT).then(res => this.textContent$.next(res))
   }
 
   async toggleSelectionMode() {
@@ -61,10 +65,7 @@ export class ExtensionViewModel {
 
   async getTextContent() {
     if (this.selectedElements$.value.length) {
-      const res = await this.extensionService.sendMessage({ action: Action.GetTextContent, data: {} })
-      if (res.action === Action.GetTextContent) {
-        this.textContent$.next(res.content)
-      }
+      await this.extensionService.sendMessage({ action: Action.GetTextContent, data: {} })
     }
   }
 }

@@ -4,3 +4,6 @@
 .selected-items {
     outline: 2px dashed orange !important;
 }
+.inner-selected-items {
+    outline: 2px dashed green !important;
+}

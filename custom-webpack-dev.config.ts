@@ -6,6 +6,7 @@ module.exports = {
   ...config,
   mode: 'development',
   plugins: [
+    ...config.plugins,
     // new ExtensionReloader({
     //   reloadPage: true, // Force the reload of the page also
     //   entries: { // The entries used for the content/background scripts or extension pages

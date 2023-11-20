@@ -1,13 +1,41 @@
-<div class="flex flex-col gap-4 surface-bg-color p-6">
+<div
+  class="flex flex-col gap-4 surface-bg-color p-6"
+  *ngIf="{
+    selectionModeActive : (selectionModeActive$ | async) ?? false,
+    selectedElements : (selectedElements$ | async) || [],
+    similarElements : (similarElements$ | async) ?? 0
+  } as streams"
+>
   <mat-stepper
     #stepper
     [orientation]="'horizontal'"
   >
     <mat-step [editable]="true">
-      <app-main></app-main>
+      <app-main [selectedElements]="streams.selectedElements">
+        <ng-container
+          [ngTemplateOutlet]="header"
+          [ngTemplateOutletContext]="{
+            selectionModeActive: streams.selectionModeActive,
+            selectedElements: streams.selectedElements,
+            similarElements: streams.similarElements,
+            selectAll: selectAll.bind(this)
+          }"
+        ></ng-container>
+      </app-main>
     </mat-step>
+
     <mat-step [editable]="true">
-      <app-save-info (back)="stepper.selectedIndex = 0"></app-save-info>
+      <app-save-info (back)="stepper.selectedIndex = 0">
+        <ng-template
+          [ngTemplateOutlet]="header"
+          [ngTemplateOutletContext]="{
+            selectionModeActive: streams.selectionModeActive,
+            selectedElements: streams.selectedElements,
+            similarElements: streams.similarElements,
+            selectAll: selectAll.bind(this)
+          }"
+        ></ng-template>
+      </app-save-info>
     </mat-step>
   </mat-stepper>
 
@@ -18,3 +46,39 @@
     (change)="updateDarkMode($any($event.target).checked)"
   ></app-toggle-input>
 </div>
+
+<ng-template
+  #header
+  let-selectionModeActive="selectionModeActive"
+  let-selectedElements="selectedElements"
+  let-similarElements="similarElements"
+  let-selectAll="selectAll"
+>
+  <div class="flex flex-col gap-4 text-dark">
+    <p class="text-base font-medium m-0">
+      selection mode: {{ (selectionModeActive ? 'active' : 'inactive') | titlecase }}
+    </p>
+    <div class="flex items-center justify-between m-0">
+      <p class="text-base font-medium">
+        Selected elements: {{ selectedElements.length }}
+      </p>
+      <p
+        *ngIf="selectedElements.length"
+        class="text-base font-medium cursor-pointer text-primary m-0"
+        [ngModel]="!!similarElements"
+      >
+      <div class="flex items-center gap-2">
+        <label
+          class="text-sm cursor-pointer hover:text-primary"
+          for="selectAll"
+        >Select all</label>
+        <input
+          id="selectAll"
+          type="checkbox"
+          name="selectAll"
+          (change)="selectAll($event)"
+        >
+      </div>
+    </div>
+  </div>
+</ng-template>

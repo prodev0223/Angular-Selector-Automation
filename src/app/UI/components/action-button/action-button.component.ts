@@ -33,7 +33,7 @@ export class ActionButtonComponent {
       message: Action.ToggleSelectionMode,
       icon: 'assets/icons/select.svg',
       title: 'Select elements',
-      description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+      description: 'Click or right click to select element',
     },
     {
       message: Action.GetTextContent,

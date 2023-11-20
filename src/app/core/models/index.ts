@@ -43,7 +43,4 @@ export type MessageRequestBody = {
 export type MessageResponseBody = {
     action: Action.ToggleSelectionMode,
     selectionMode: boolean,
-} | {
-    action: Action.GetTextContent,
-    content: string,
 }

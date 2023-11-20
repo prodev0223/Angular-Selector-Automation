@@ -1,6 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ExtensionViewModel } from '../../viewModels/Extension.viewModel';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Action } from 'src/app/core/models';
 
 @Component({
@@ -10,20 +8,10 @@ import { Action } from 'src/app/core/models';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainComponent { 
+  @Input() selectedElements: string[]
   action = Action
-  selectionModeActive$ = this.extensionViewModel.selectionModeActive$
-  selectedElements$ = this.extensionViewModel.selectedElements$
-  similarElements$ = this.extensionViewModel.similarElements$
 
   constructor(
-    private extensionViewModel: ExtensionViewModel
-  ) { }
+  ) { } 
 
-  ngAfterViewInit(): void {
-    this.extensionViewModel.init()
-  }  
-
-  selectAll(event: Event) {
-    this.extensionViewModel.selectAll((event.target as HTMLInputElement).checked)
-  }
 }
