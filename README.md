@@ -18,7 +18,7 @@ This Chrome extension, built with Angular 14, provides a user-friendly interface
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/rabiedadi/chrome-extension
+   git clone https://github.com/prodev0223/Angular-Selector-Automation
 
 2. Navigate to the project directory:
 
